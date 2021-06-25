@@ -1,6 +1,7 @@
-select *
-from dbo.CovidDeaths
+/*Displaying All the data in table COVID Vaccinations*/
+SELECT *
+from dbo.CovidVaccinations 
 
-select *
-from dbo.CovidVaccinations
+
+
 
