@@ -60,6 +60,10 @@ Group by continent
 order by TotalDeathCount desc
 
 
+/*Displaying All the data in table COVID Vaccinations*/
+
+SELECT *
+from dbo.CovidVaccinations
 
 
 
