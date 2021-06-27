@@ -24,10 +24,19 @@ order by 1,2
 
 -- Looking at total cases vs total population
 -- Shows what percentage of total population got COVID by Country(for eg, US)
-SELECT location, date, population, total_cases, CAST((total_cases*100/population) as decimal(18,3)) as Percent_cases
+
+SELECT location, date, population, total_cases, CAST((total_cases*100/population) as decimal(18,3)) as Percent_Infection
 FROM dbo.CovidDeaths
 WHERE location like '%states%'
 order by 2
+
+-- Looking at Countries with Maximum Infection Rate by Countries Total Population
+SELECT location, population, MAX(total_cases) as HighestCases, MAX(CAST((total_cases*100/population) as decimal(18,3))) as Max_Percent_Infection
+from dbo.CovidDeaths
+GROUP By [location],population
+ORDER BY Max_Percent_Infection DESC
+
+
 
 
 
