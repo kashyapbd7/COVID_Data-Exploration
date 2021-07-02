@@ -80,3 +80,10 @@ FROM dbo.CovidVaccinations
 
 
 Alter table CovidVaccinations Alter Column total_tests DECIMAL;
+
+
+SELECT Location, date, total_tests, Cast((total_tests*100/total_cases) as decimal(18,3)) as Percent_tests
+from dbo.CovidVaccinations
+WHERE location like '%states%'
+    AND continent is NOT NULL
+order by 1,2
