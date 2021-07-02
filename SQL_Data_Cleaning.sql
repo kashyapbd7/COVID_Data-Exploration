@@ -74,4 +74,5 @@ From dbo.CovidDeaths
 
 
 
-
+SELECT *
+FROM dbo.CovidVaccinations
