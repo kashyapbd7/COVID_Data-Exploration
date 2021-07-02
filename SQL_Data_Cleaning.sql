@@ -76,3 +76,7 @@ From dbo.CovidDeaths
 
 SELECT *
 FROM dbo.CovidVaccinations
+
+
+
+Alter table CovidVaccinations Alter Column total_tests DECIMAL;
