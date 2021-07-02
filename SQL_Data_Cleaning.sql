@@ -79,6 +79,8 @@ FROM dbo.CovidVaccinations
 
 
 
+/*Data type for  total_tests is varchar so converting 
+to Decimal for numerical calculations.*/
 Alter table CovidVaccinations Alter Column total_tests DECIMAL;
 
 
