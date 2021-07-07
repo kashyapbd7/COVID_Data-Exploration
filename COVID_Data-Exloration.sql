@@ -65,27 +65,3 @@ order by TotalDeathCount desc
 SELECT *
 from dbo.CovidVaccinations
 
-
--- GLOBAL NUMBERS
-
-Select SUM(new_cases) as total_cases, SUM(cast(new_deaths as int)) as total_deaths, SUM(cast(new_deaths as int))/SUM(new_Cases)*100 as DeathPercentage
-From dbo.CovidDeaths
-
-
-
-
-SELECT *
-FROM dbo.CovidVaccinations
-
-
-
-/*Data type for  total_tests is varchar so converting 
-to Decimal for numerical calculations.*/
-Alter table CovidVaccinations Alter Column total_tests DECIMAL;
-
-
-SELECT Location, date, total_tests, Cast((total_tests*100/total_cases) as decimal(18,3)) as Percent_tests
-from dbo.CovidVaccinations
-WHERE location like '%states%'
-    AND continent is NOT NULL
-order by 1,2
