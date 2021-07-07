@@ -1,3 +1,3 @@
 select * from dbo.CovidDeaths
 
-select * from dbo.CovidVaccinations
+select count(*) from dbo.CovidVaccinations
