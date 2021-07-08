@@ -77,6 +77,6 @@ from dbo.CovidVaccinations
 
 
 
-selectcount(*) from dbo.CovidDeaths
+select count(*) from dbo.CovidDeaths
 
 select count(*) from dbo.CovidVaccinations
