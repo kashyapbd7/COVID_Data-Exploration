@@ -80,3 +80,5 @@ from dbo.CovidVaccinations
 select count(*) from dbo.CovidDeaths
 
 select count(*) from dbo.CovidVaccinations
+
+select location from dbo.CovidDeaths
