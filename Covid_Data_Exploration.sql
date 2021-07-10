@@ -60,6 +60,17 @@ Group by continent
 order by TotalDeathCount desc
 
 
+
+
+-- Showing contintents with the highest vaccine count per population
+
+Select continent, MAX(cast(Total_vaccination as int)) as TotalVaccineCount
+From dbo.CovidVaccinations
+Where continent is not null
+Group by continent
+order by TotalVaccineCount desc
+
+
 /*Displaying All the data in table COVID Vaccinations*/
 
 SELECT *
@@ -82,3 +93,4 @@ select count(*) from dbo.CovidDeaths
 select count(*) from dbo.CovidVaccinations
 
 select total_deaths from dbo.CovidDeaths
+
