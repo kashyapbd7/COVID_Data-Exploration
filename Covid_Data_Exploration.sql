@@ -56,4 +56,10 @@ ORDER BY Total_Deaths desc
 
 -- GLOBAL NUMBERS
 
+SELECT * from dbo.CovidDeaths
+
+-- New_cases and New_deaths was converted to numeric from varchar
+Alter table CovidDeaths Alter Column new_cases_smoothed DECIMAL;
+Alter table CovidDeaths Alter Column new_deaths DECIMAL;
+
 
