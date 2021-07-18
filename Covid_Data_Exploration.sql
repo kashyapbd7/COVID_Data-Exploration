@@ -63,8 +63,15 @@ Alter table CovidDeaths Alter Column new_cases DECIMAL;
 Alter table CovidDeaths Alter Column new_deaths DECIMAL;
 
 -- Looking at daily total new cases vs total_death percentage 
-SELECT date, SUM(new_cases) as Total_Cases, SUM(new_deaths) as Total_Deaths, SUM(new_deaths)*100/SUM(new_cases_smoothed) as DeathPercentage
+SELECT date, SUM(new_cases) as Total_Cases, SUM(new_deaths) as Total_Deaths, SUM(new_deaths)*100/SUM(new_cases) as DeathPercentage
 FROM dbo.CovidDeaths
 WHERE continent IS NOT NULL
 GROUP BY date
 ORDER BY [date]
+
+-- Looking at worlds total cases with total deaths and its percent.
+
+SELECT SUM(new_cases) as Total_Cases, SUM(new_deaths) as Total_Deaths, SUM(new_deaths)*100/SUM(new_cases) as DeathPercent_World
+FROM dbo.CovidDeaths
+WHERE continent IS NOT NULL
+ORDER BY 1,2
