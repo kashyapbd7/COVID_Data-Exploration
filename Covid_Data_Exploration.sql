@@ -93,4 +93,21 @@ WHERE DEA.continent IS NOT NULL
 ORDER BY 3,1
 
 
+-- Creating CTE for the Rooling window function for Percemt Population Vaccinated. 
+
+WITH PopuvsVacci (date, continent, location, Population, new_vaccinations, RollingPeople_Vaccinated)
+AS
+(
+SELECT DEA.[date], DEA.continent, DEA.[location], DEA.population, VAC.new_vaccinations,
+    SUM(cast(VAC.new_vaccinations as int)) OVER (PARTITION BY DEA.location ORDER BY DEA.location, DEA.DATE) AS RollingPeople_Vaccinated
+FROM dbo.CovidDeaths DEA
+JOIN dbo.CovidVaccination VAC
+ON DEA.[date] = VAC.[date]
+AND DEA.[location] = VAC.[location]
+WHERE DEA.continent IS NOT NULL
+)
+
+SELECT * , (RollingPeople_Vaccinated/Population)*100 AS Percent_Population_Vaccinated
+FROM PopuvsVacci
+ORDER BY 2,3
 
