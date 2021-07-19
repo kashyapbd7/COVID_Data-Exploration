@@ -75,3 +75,22 @@ SELECT SUM(new_cases) as Total_Cases, SUM(new_deaths) as Total_Deaths, SUM(new_d
 FROM dbo.CovidDeaths
 WHERE continent IS NOT NULL
 ORDER BY 1,2
+
+
+SELECT * FROM dbo.CovidVaccination
+
+
+-- Looking at Total population vs Vaccinated population using Rolling Window
+
+SELECT DEA.[date], DEA.continent, DEA.[location], DEA.population, VAC.new_vaccinations, 
+SUM(CONVERT( INT,VAC.new_vaccinations)) OVER (PARTITION BY DEA.[location] ORDER BY DEA.LOCATION, DEA.DATE) AS RollingPeople_Vaccinated
+FROM dbo.CovidDeaths DEA
+JOIN dbo.CovidVaccination VAC
+ON DEA.[date] = VAC.[date]
+AND DEA.[location] = VAC.[location] 
+WHERE DEA.continent IS NOT NULL
+--AND DEA.[location] like '%states%'
+ORDER BY 3,1
+
+
+
