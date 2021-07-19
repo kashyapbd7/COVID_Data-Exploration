@@ -111,3 +111,34 @@ SELECT * , (RollingPeople_Vaccinated/Population)*100 AS Percent_Population_Vacci
 FROM PopuvsVacci
 ORDER BY 2,3
 
+
+
+-- Creating TEMP Table for Calculating Max Fully Percent population Vaccinated (2 doses) by Country. 
+
+DROP Table IF exists #MaxPopulationVaccinated
+CREATE TABLE #MaxPopulationVaccinated
+(
+    Date DATETIME,
+    Continent NVARCHAR(255),
+    Location NVARCHAR(255),
+    Population NUMERIC,
+    New_Vaccination NUMERIC,
+    RollingPeople_Vaccinated NUMERIC,
+)
+
+INSERT INTO #MaxPopulationVaccinated
+SELECT DEA.[date], DEA.continent, DEA.[location], DEA.population, VAC.new_vaccinations,
+    SUM(cast(VAC.new_vaccinations as int)) OVER (PARTITION BY DEA.location ORDER BY DEA.location, DEA.DATE) AS RollingPeople_Vaccinated
+FROM dbo.CovidDeaths DEA
+JOIN dbo.CovidVaccination VAC
+ON DEA.[date] = VAC.[date]
+AND DEA.[location] = VAC.[location]
+WHERE DEA.continent IS NOT NULL
+
+SELECT Continent, [Location], Max(Population) as Polulation, MAX(RollingPeople_Vaccinated)AS Total_Vaccianted,  
+(CAST(MAX(RollingPeople_Vaccinated)/2 as int)/ Max(Population))*100 AS Percent_Population_Vaccinated
+FROM #MaxPopulationVaccinated
+WHERE RollingPeople_Vaccinated IS NOT NULL
+GROUP BY  [Location], Continent
+ORDER BY 1,2
+
